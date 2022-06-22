@@ -67,7 +67,102 @@ stages = ['''
 =========
 ''']
 lives = 7
-word_list = ["aardvark", "baboon", "camel"]
+word_list = [
+"aardvark", 
+"baboon", 
+"camel",
+"analytical",
+"assess",
+"conceptual",
+"constitutional",
+"creative",
+"distribution",
+"environmental",
+"illegal",
+"analyse",
+"analysis",
+"analyst",
+"analytic",
+"analyze",
+"approach",
+"area",
+"assessment",
+"assume",
+"assumed",
+"assuming",
+"assumption",
+"authoritative",
+"authority",
+"availability",
+"available",
+"beneficial",
+"beneficiary",
+"benefit",
+"concept",
+"conception",
+"consist",
+"consistency",
+"consistent",
+"consistently",
+"constituency",
+"constituent",
+"constitute",
+"constitution",
+"constitutive",
+"context",
+"contextual",
+"contextualize",
+"contract",
+"contractor",
+"create",
+"creation",
+"creator",
+"data",
+"define",
+"definition",
+"derivation",
+"derivative",
+"derive",
+"dissimilar",
+"distribute",
+"distributive",
+"distributor",
+"economic",
+"economical",
+"economically",
+"economics",
+"economist",
+"economy",
+"environment",
+"environmentalist",
+"establish",
+"established",
+"establishment",
+"estimate",
+"estimation",
+"evidence", 
+"evident",
+"evidential",
+"evidently",
+"export",
+"exporter",
+"factor",
+"finance",
+"financial",
+"financially",
+"formula",
+"formulate",
+"formulation",
+"function",
+"functional",
+"functionally",
+"identifiable",
+"identification",
+"identify",
+"identity",
+"illegality",
+"income",
+"inconsistency"]
 end_of_game = False
 display = []
 guessed_letters = []
@@ -76,12 +171,7 @@ chosen_word = random.choice(word_list)
 for i in chosen_word:
   display += "_"
 
-if "_" not in display:
-  end_of_game = True
-  print(f"\nCongratulations, you've Found the word is was '{dj}'\n")
-
-
-
+# print(chosen_word)
 
 while end_of_game != True:
   try:
@@ -93,17 +183,24 @@ while end_of_game != True:
       lives -= 1
       if lives == 0:
         end_of_game == True
-        print(f"Unfortunately '{guess}' isn't in there....You lost!\n {stages[lives]}")
+        print(f"Unfortunately '{guess}' isn't in there....You lost!\n\nThe word was {chosen_word}\n{stages[lives]}")
         break
       print(f"sorry, that guess is incorrect\n{stages[lives]}")
-    if guess in chosen_word:
+
+    elif guess in chosen_word:
       print(f"Excellent guess! '{guess}' is in there!\n")
     for position in range(word_len):
       letter = chosen_word[position]
       if letter == guess:
         display[position] = letter
+        if "_" not in display:
+          end_of_game = True
+          print(f"\nCongratulations, you've Found the word is was '{chosen_word}'\n")
+          break
+
     dj = "".join(display)
-    print(f"These are the letters you've tried so far:\n{guessed_letters}\nYou have '{lives}' lives left, guess again..\n\n{dj}")
+    if end_of_game == False:
+      print(f"These are the letters you've tried so far:\n{guessed_letters}\nYou have '{lives}' lives left, guess again..\n\n{dj}")
   except ValueError:
     print("Type in a letter")
 
