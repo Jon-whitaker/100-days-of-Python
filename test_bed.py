@@ -42,7 +42,7 @@ while end_of_game != True:
           display[position] = letter
           if "_" not in display:
             end_of_game = True
-            print(f"\nCongratulations, you've Found the word is was '{chosen_word}'\n")
+            print(f"\nCongratulations!!!!!\n\n{ha.Win}\n\n you've Found the word is was '{chosen_word}'\n")
             break
           
         dj = " ".join(display)
