@@ -1,6 +1,7 @@
 import random
 import hangman_words as hw
 import hangman_art as ha
+from replit import clear
 
 
 stages = ha.stages
@@ -19,6 +20,7 @@ for i in chosen_word:
 while end_of_game != True:
   try:
     guess = str(input("Guess a letter.\n")).lower()
+    clear()
     word_len = len(chosen_word)
 
     if guess not in guessed_letters:
@@ -31,8 +33,6 @@ while end_of_game != True:
           print(f"Unfortunately '{guess}' isn't in there....You lost!\n\nThe word was {chosen_word}\n{stages[lives]}")
           break
         print(f"sorry, that guess is incorrect\n{stages[lives]}")
-      
-#      #--- indent the below
   
       elif guess in chosen_word:
         print(f"Excellent guess! '{guess}' is in there!\n")
