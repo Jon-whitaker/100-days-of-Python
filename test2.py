@@ -50,6 +50,6 @@ while end_of_game != True:
         print(f"These are the letters you've tried so far:\n{guessed_letters}\nYou have '{lives}' lives left, guess again..\n\n{dj}")
     else:
         if guess in guessed_letters:
-          print(f"You've already guessed that Letter..\n {dj}\n....try again....")
+          print("You've already guessed that Letter.. try again")
   except ValueError:
     print("Type in a letter")
