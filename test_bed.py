@@ -1,55 +1,67 @@
-import random
-import hangman_words as hw
-import hangman_art as ha
-from replit import clear
+
+from operator import ne
 
 
-stages = ha.stages
-logo = ha.logo
-lives = 7
-word_list = hw.word_list
-end_of_game = False
-display = []
-guessed_letters = []
-chosen_word = random.choice(word_list)
-print(logo)
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
-for i in chosen_word:
-  display += "_"
+direction = input("Would you like to 'encrypt' or 'decrypt'?:\n")
+text = input("Type your message:\n").lower()
+shift = int(input("Type the shift number:\n"))
 
-while end_of_game != True:
-  try:
-    guess = str(input("Guess a letter.\n")).lower()
-    clear()
-    word_len = len(chosen_word)
+text = list(text)
+indexes = [alphabet.index(i) for i in text if i.isalpha()]
+l = len(alphabet)
 
-    if guess not in guessed_letters:
-      guessed_letters += guess    
-         
-      if guess not in chosen_word:
-        lives -= 1
-        if lives == 0:
-          end_of_game == True
-          print(f"Unfortunately '{guess}' isn't in there....You lost!\n\nThe word was {chosen_word}\n{stages[lives]}")
-          break
-        print(f"sorry, that guess is incorrect\n{stages[lives]}")
-  
-      elif guess in chosen_word:
-        print(f"Excellent guess! '{guess}' is in there!\n")
-      for position in range(word_len):
-        letter = chosen_word[position]
-        if letter == guess:
-          display[position] = letter
-          if "_" not in display:
-            end_of_game = True
-            print(f"\nCongratulations!!!!!\n\n{ha.Win}\n\n you've Found the word is was '{chosen_word}'\n")
-            break
-          
-        dj = " ".join(display)
-      if end_of_game == False:
-        print(f"These are the letters you've tried so far:\n{guessed_letters}\nYou have '{lives}' lives left, guess again..\n\n{dj}")
-    else:
-        if guess in guessed_letters:
-          print(f"You've already guessed that Letter..\n {dj}\n....try again....")
-  except ValueError:
-    print("Type in a letter")
+def encrypt(text,shift):
+  rtrn_txt = []
+  for i in indexes:
+    total = i+shift
+    if total >= l:
+      remainingV = total % l
+      ext_indx = alphabet[0+remainingV]
+      rtrn_txt += ext_indx
+    elif total <= l:
+      rtrn_txt += alphabet[total]
+  print(''.join(rtrn_txt))
+
+def decrypt(text,shift):
+  rtrn_txt = []
+  for i in indexes:
+    total = i-shift
+    if total < 0:
+      negSum = 0 - total
+      ext_indx = alphabet[-negSum]
+      rtrn_txt += ext_indx
+    elif total <= l:
+      rtrn_txt += alphabet[i-shift]
+  print(''.join(rtrn_txt))
+
+def enorde(direction):
+  if direction == "encrypt":
+    encrypt(text,shift)
+  elif direction == "decrypt":
+    decrypt(text,shift)
+
+enorde(direction)
+
+
+## got take into account punctuation.
+
+
+    
+
+#TODO-1: Create a function called 'encrypt' that takes the 'text' and 'shift' as inputs.
+
+    #TODO-2: Inside the 'encrypt' function, shift each letter of the 'text' forwards in the alphabet by the shift amount and print the encrypted text.  
+    #e.g. 
+    #plain_text = "hello"
+    #shift = 5
+    #cipher_text = "mjqqt"
+    #print output: "The encoded text is mjqqt"
+
+    ##HINT: How do you get the index of an item in a list:
+    #https://stackoverflow.com/questions/176918/finding-the-index-of-an-item-in-a-list
+
+    ##🐛Bug alert: What happens if you try to encode the word 'civilization'?🐛
+
+#TODO-3: Call the encrypt function and pass in the user inputs. You should be able to test the code and encrypt a message.
