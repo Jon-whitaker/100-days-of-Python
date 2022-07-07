@@ -1489,3 +1489,365 @@ def prime_checker(number):
 #Do NOT change any of the code below👇
 n = int(input("Check this number: "))
 prime_checker(number=n)
+
+
+
+##-------------------------------------------------------------
+##-------------------------------------------------------------
+
+# Caesar cipher
+
+
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+direction = input("Would you like to 'encrypt' or 'decrypt'?:\n")
+text = input("Type your message:\n").lower()
+shift = int(input("Type the shift number:\n"))
+
+text = list(text)
+# below creates an index number for each item in the list (text)
+indexes = [alphabet.index(i) for i in text if i.isalpha()]
+l = len(alphabet)
+
+def encrypt(plain_text,shift_amount):
+  rtrn_txt = []
+  for i in indexes:
+    total = i+shift_amount
+    if total >= l:
+      remainingV = total % l
+      ext_indx = alphabet[0+remainingV]
+      rtrn_txt += ext_indx
+    elif total <= l:
+      rtrn_txt += alphabet[total]
+  print("Encoded text = "+(''.join(rtrn_txt)))
+
+def decrypt(encrypted_text,shift_amount):
+  rtrn_txt = []
+  for i in indexes:
+    total = i-shift_amount
+    if total < 0:
+      negSum = 0 - total
+      ext_indx = alphabet[-negSum]
+      rtrn_txt += ext_indx
+    elif total <= l:
+      rtrn_txt += alphabet[i-shift_amount]
+  print("Your decypted text is: "+(''.join(rtrn_txt)))
+
+def enorde(direction):
+  if direction == "encrypt":
+    encrypt(text,shift)
+  elif direction == "decrypt":
+    decrypt(text,shift)
+
+enorde(direction)
+
+##-----------------------------------
+
+#How she did it:
+
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+text = input("Type your message:\n").lower()
+shift = int(input("Type the shift number:\n"))
+
+def encrypt(plain_text, shift_amount):
+  cipher_text = ""
+  for letter in plain_text:
+    position = alphabet.index(letter)
+    new_position = position + shift_amount
+    cipher_text += alphabet[new_position]
+  print(f"The encoded text is {cipher_text}")
+
+#TODO-1: Create a different function called 'decrypt' that takes the 'text' and 'shift' as inputs.
+def decrypt(cipher_text, shift_amount):
+  #TODO-2: Inside the 'decrypt' function, shift each letter of the 'text' *backwards* in the alphabet by the shift amount and print the decrypted text.  
+  #e.g. 
+  #cipher_text = "mjqqt"
+  #shift = 5
+  #plain_text = "hello"
+  #print output: "The decoded text is hello"
+  plain_text = ""
+  for letter in cipher_text:
+    position = alphabet.index(letter)
+    new_position = position - shift_amount
+    plain_text += alphabet[new_position]
+  print(f"The decoded text is {plain_text}")
+
+
+#TODO-3: Check if the user wanted to encrypt or decrypt the message by checking the 'direction' variable. Then call the correct function based on that 'drection' variable. You should be able to test the code to encrypt *AND* decrypt a message.
+if direction == "encode":
+  encrypt(plain_text=text, shift_amount=shift)
+elif direction == "decode":
+  decrypt(cipher_text=text, shift_amount=shift)
+
+  
+##-----------------------------------
+
+# She combined the functions
+
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+text = input("Type your message:\n").lower()
+shift = int(input("Type the shift number:\n"))
+
+#TODO-1: Combine the encrypt() and decrypt() functions into a single function called caesar(). 
+
+def caesar(start_text, shift_amount, cipher_direction):
+  end_text = ""
+  if cipher_direction == "decode":
+      shift_amount *= -1
+  for letter in start_text:
+    position = alphabet.index(letter)
+    new_position = position + shift_amount
+    end_text += alphabet[new_position]
+  print(f"Here's the {direction}d result: {end_text}")
+
+
+#TODO-2: Call the caesar() function, passing over the 'text', 'shift' and 'direction' values.
+caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
+
+
+##-----------------------------------
+# So I had to give in with my attempt as it didn't work with indexes :(
+  # I've moved on using her code.
+  # below is as far as I got.
+
+
+import art
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+print(art.logo)
+direction = input("Would you like to 'encrypt' or 'decrypt'?:\n")
+text = input("Type your message:\n").lower()
+shift = int(input("Type the shift number:\n"))
+
+text = list(text)
+# below creates an index number for each item in the list (text)
+indexes = [alphabet.index(i) for i in text if i.isalpha()]
+l = len(alphabet)
+
+def caesar(direction, input_text, shift_amount):
+  rtrn_txt = []    
+  if direction == "en":
+    for i in text:
+      if str(i).isalpha() == False:
+        rtrn_txt += str(i)
+    for i in indexes:
+      en_total = i+shift_amount
+      if en_total >= l:
+        remainingV = en_total % l
+        ext_indx = alphabet[0+remainingV]
+        rtrn_txt += ext_indx
+      elif en_total <= l:
+        rtrn_txt += alphabet[en_total] 
+    print("Encoded text = "+(''.join(rtrn_txt)))
+  elif direction == "de":
+    for i in indexes:
+      if i not in alphabet:
+        rtrn_txt += i
+      de_total = i-shift_amount
+      if de_total < 0:
+        negSum = 0 - de_total
+        ext_indx = alphabet[-negSum]
+        rtrn_txt += ext_indx
+      elif de_total <= l:
+        rtrn_txt += alphabet[i-shift_amount]
+    print("Your decypted text is: "+(''.join(rtrn_txt)))
+
+def encrypt(plain_text,shift_amount):
+  rtrn_txt = []
+  for i in indexes:
+    total = i+shift_amount
+    if total >= l:
+      remainingV = total % l
+      ext_indx = alphabet[0+remainingV]
+      rtrn_txt += ext_indx
+    elif total <= l:
+      rtrn_txt += alphabet[total] 
+  print("Encoded text = "+(''.join(rtrn_txt)))
+
+def decrypt(encrypted_text,shift_amount):
+  rtrn_txt = []
+  for i in indexes:
+    total = i-shift_amount
+    if total < 0:
+      negSum = 0 - total
+      ext_indx = alphabet[-negSum]
+      rtrn_txt += ext_indx
+    elif total <= l:
+      rtrn_txt += alphabet[i-shift_amount]
+  print("Your decypted text is: "+(''.join(rtrn_txt)))
+
+def enorde(direction):
+  if direction == "en":
+    encrypt(text,shift)
+  elif direction == "de":
+    decrypt(text,shift)
+
+caesar(input_text=text, shift_amount=shift, direction=direction)
+
+
+##-----------------------------------
+
+#ok, my shot at her code:
+
+from art import logo
+
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+
+proceed = True
+
+def caesar(start_text, shift_amount, cipher_direction):
+  end_text = ""
+  if shift_amount >= 26:
+    y = shift_amount % 26
+    shift_amount = y
+  if cipher_direction == "decode":
+    shift_amount *= -1
+  for char in start_text:
+
+    #TODO-3: What happens if the user enters a number/symbol/space?
+    #Can you fix the code to keep the number/symbol/space when the text is encoded/decoded?
+    #e.g. start_text = "meet me at 3"
+    #end_text = "•••• •• •• 3"
+    if char.isalpha() == False:
+      end_text += char
+    else:
+      position = alphabet.index(char)
+      new_position = position + int(shift_amount)
+      end_text += alphabet[new_position]
+    
+  print(f"Here's the {cipher_direction}d result: {end_text}")
+
+#TODO-1: Import and print the logo from art.py when the program starts.
+
+#TODO-4: Can you figure out a way to ask the user if they want to restart the cipher program?
+#e.g. Type 'yes' if you want to go again. Otherwise type 'no'.
+#If they type 'yes' then ask them for the direction/text/shift again and call the caesar() function again?
+#Hint: Try creating a while loop that continues to execute the program if the user types 'yes'. 
+while proceed == True:
+  print(logo)
+  direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+  text = input("Type your message:\n").lower()
+  shift = int(input("Type the shift number:\n"))
+# TODO-2: What if the user enters a shift that is greater than the number of letters in the alphabet?
+# Try running the program and entering a shift number of 45.
+# Add some code so that the program continues to work even if the user enters a shift number greater than 26. 
+# Hint: Think about how you can use the modulus (%).
+
+  caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
+  try_again = input("would you like to restart the cypher program? type: 'yes' or 'no'")
+  if try_again == "no":
+    proceed = False 
+
+##-----------------------------------
+
+# what she did.
+''' this has a great while loop and she's simplified what I did with Modulo %'''
+
+alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+
+def caesar(start_text, shift_amount, cipher_direction):
+  end_text = ""
+  if cipher_direction == "decode":
+    shift_amount *= -1
+  for char in start_text:
+    #TODO-3: What happens if the user enters a number/symbol/space?
+    #Can you fix the code to keep the number/symbol/space when the text is encoded/decoded?
+    #e.g. start_text = "meet me at 3"
+    #end_text = "•••• •• •• 3"
+    if char in alphabet:
+      position = alphabet.index(char)
+      new_position = position + shift_amount
+      end_text += alphabet[new_position]
+    else:
+      end_text += char
+  print(f"Here's the {cipher_direction}d result: {end_text}")
+
+#TODO-1: Import and print the logo from art.py when the program starts.
+from art import logo
+print(logo)
+
+#TODO-4: Can you figure out a way to ask the user if they want to restart the cipher program?
+#e.g. Type 'yes' if you want to go again. Otherwise type 'no'.
+#If they type 'yes' then ask them for the direction/text/shift again and call the caesar() function again?
+#Hint: Try creating a while loop that continues to execute the program if the user types 'yes'.
+should_end = False
+while not should_end:
+
+  direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
+  text = input("Type your message:\n").lower()
+  shift = int(input("Type the shift number:\n"))
+  #TODO-2: What if the user enters a shift that is greater than the number of letters in the alphabet?
+  #Try running the program and entering a shift number of 45.
+  #Add some code so that the program continues to work even if the user enters a shift number greater than 26. 
+  #Hint: Think about how you can use the modulus (%).
+  shift = shift % 26
+
+  caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
+
+  restart = input("Type 'yes' if you want to go again. Otherwise type 'no'.\n")
+  if restart == "no":
+    should_end = True
+    print("Goodbye")
+    
+
+
+
+##-------------------------------------------------------------
+##-------------------------------------------------------------
+
+# Dictionaries
+
+# dictionaries are denoted by curly bracers {}
+# to add to an existing dictionary, you'd do the following:
+
+dict1 = {}
+dict1["key"] = "value" # don't forget the key and value have to be in "quotes"
+# so:
+dict1["list1"] = "whatever this value needs to be"
+
+# if you create the same dictionary further down, that also wipes the dictionary. 
+# so if i were to create dict1 again below, it'd be empty.
+
+dict1 = {}
+
+# to edit a dict, you'd pick the same key as shown above, but asign a new value to it, and if you assign a key that's not there, it'll just create a new entry.
+
+# looping through a dictionary:
+# if you do a for loop, it'll just give you back the keys:
+for key in dict1:
+  print(key)
+
+# so to print the key/value, you'd write:
+for key in dict1:
+  print(dict1[key]) # putting it in square brackets matters apparently
+
+
+##-------------------------------------------------------------
+##-------------------------------------------------------------
+
+#grading exercise.
+
+
+student_scores = {
+  "Harry": 81,
+  "Ron": 78,
+  "Hermione": 99, 
+  "Draco": 74,
+  "Neville": 62,
+}
+# 🚨 Don't change the code above 👆
+
+#TODO-1: Create an empty dictionary called student_grades.
+
+
+#TODO-2: Write your code below to add the grades to student_grades.👇
+
+    
+
+# 🚨 Don't change the code below 👇
+print(student_grades)
