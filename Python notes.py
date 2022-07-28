@@ -492,7 +492,7 @@ print(person_who_will_pay + " is going to buy the meal today!")
 # if you want to use quotes in an input message, but the computer thinks you're starting and finishing a string, half way through the sentence... i.e.:
 input("You're at a crossroad, where do you want to go? Type "left" or "right".")
 #So usually, to get around the issue shown above, we'd use a single quote at each end:
-input('You're at a crossroad, where do you want to go? Type "left" or "right"'.)
+input('You''re at a crossroad, where do you want to go? Type "left" or "right"')
 #as shown, it's not working here because of the apostrophe in the work "you're"..
 # so to combat this, we use a backslash to escape the apostrophe in you're:
 input('You\'re at a crossroad, where do you want to go? Type "left" or "right".').lower()
@@ -1693,7 +1693,7 @@ caesar(input_text=text, shift_amount=shift, direction=direction)
 
 #ok, my shot at her code:
 
-from art import logo
+from art import logo1
 
 alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
 
@@ -1844,10 +1844,485 @@ student_scores = {
 
 #TODO-1: Create an empty dictionary called student_grades.
 
+student_grades = {}
+
+for key in student_scores:
+  if student_scores[key] >= 91:
+    student_grades[key] = "Outstanding"
+  if student_scores[key] >= 81 and student_scores[key] <= 90:
+    student_grades[key] = "Exceeds Expectations"
+  if student_scores[key] >= 71 and student_scores[key] <= 80:
+    student_grades[key] = "Acceptable"
+  if student_scores[key] <= 70:
+    student_grades[key] = "Fail"
+
 
 #TODO-2: Write your code below to add the grades to student_grades.👇
 
-    
-
 # 🚨 Don't change the code below 👇
 print(student_grades)
+
+##-----------------------------------
+
+# How she did it:
+
+for student in student_scores:
+  score = student_scores[student]
+  if score > 90:
+    student_grades[student] = "Outstanding"
+  if score > 80:
+    student_grades[student] = "Excee ds Expectations"
+  if score >= 70:
+    student_grades[student] = "Acceptable"
+  else:
+    student_grades[student] = "Fail"
+
+
+##-------------------------------------------------------------
+##-------------------------------------------------------------
+
+# With dictionaries, you can't have multiple values per key, unless you nest the values inside a list or another dictionary:
+
+travel_log = {
+  "France": "Paris", "Normandy", "lille" #.. This doesn't work apparently
+}
+
+# Instead you'd have to have:
+
+travel_log = {
+  "France": ["Paris", "Normandy", "lille"]
+}
+
+# Nesting a dictionary or list inside another outer dictionary is more useful than nesting a list inside a list because of the way the data is structured
+
+# Nesting a dictionary inside a dictionary:
+
+travel_log = {
+  "France": {"cities_visited": ["Paris", "Nor mandy", "lille"], "total_visits": 12}
+  "Germany": {"cities_visited": ["Berlin", "Hamburg", "Stuttgart"], "total_visits" 32}
+}
+
+# The difference between accessing lists compared to dictionaries:
+# Lists are accessed by their positional value.. so: list[0] etc
+# dictionaries are accessed by their key/value data, so: dict1[key]
+
+# Nesting a dictionary inside a list:
+# when creating nested items, it's a good idea to separate them out:
+
+travel_log = [
+  {
+    "country": "France", 
+    "cities_visited": ["Paris", "Nor mandy", "lille"],
+    "total_visits": 12
+  },
+  {
+    "country": "Germany",
+    "cities_visited": ["Berlin", "Hamburg", "Stuttgart"],
+    "total_visits" : 32
+  }
+]
+
+##-------------------------------------------------------------
+##-------------------------------------------------------------
+
+# adding a dictionary to an already existing list of dictionaries:
+
+travel_log = [
+{
+  "country": "France",
+  "visits": 12,
+  "cities": ["Paris", "Lille", "Dijon"]
+},
+{
+  "country": "Germany",
+  "visits": 5,
+  "cities": ["Berlin", "Hamburg", "Stuttgart"]
+},
+]
+#🚨 Do NOT change the code above
+
+#TODO: Write the function that will allow new countries
+#to be added to the travel_log. 👇
+
+def add_new_country(input_country, times_visited, cities_visited):
+  travel_log.append({
+      "country": input_country, 
+      "visits": times_visited,
+      "cities": cities_visited
+  })
+
+
+#🚨 Do not change the code below
+add_new_country("Russia", 2, ["Moscow", "Saint Petersburg"])
+print(travel_log)
+
+##--------------------------------
+
+# how she did it:
+
+def add_new_country(input_country, times_visited, cities_visited):
+  new_country = {}
+  new_country["country"] = input_country
+  new_country["visits"] = times_visited
+  new_country["cities"] = cities_visted
+  travel_log.append(new_country)
+
+  ##-----------------------------
+
+# to print a specific item from a dictionary like the ones shown above, use:
+
+
+# Question 3:
+# Which line of code will print "Steak"?
+
+order = {
+    "starter": {1: "Salad", 2: "Soup"},
+    "main": {1: ["Burger", "Fries"], 2: ["Steak"]},
+    "dessert": {1: ["Ice Cream"], 2: []},
+}
+# [2] accesses the value with key 2, [0] gets the first item from the list.
+print(order["main"][2][0])
+
+##-------------------------------------------------------------
+##-------------------------------------------------------------
+
+
+# Secret auction program
+
+
+
+from replit import clear
+from art import logo2
+from time import sleep
+from hangman_art import Win
+
+in_progress = True
+bids = {}
+
+def place_bid(name, bid):
+  bids[name] = bid
+
+def deets(seller,item):
+  clear()
+  print(logo2 +"\n")
+  name = input(f"Whalecum to the blind auction! Today, you will be bidding for the glorious chance to own '{item}' being sold by '{seller}'.\nPlease enter your name, and let the bidding commence!\n")
+  bid = int(input(f"Hi {name}, please enter your bid for '{item}' in £s\n"))
+  bid_correct = input(f"Your bid was '£{bid}', is this correct? 'y/n'\n")
+  if bid_correct == "y":
+    place_bid(name, bid)
+    next = input(f"congratulations, you're in the running to win '{item}' with a bid of '£{bid}', are you the last bidder? 'y/n'")
+    if next == "n":
+      print("Please pass the device over to the next bidder after the screen clears")
+      print(sleep(3))
+      clear()
+      deets(seller,item)
+    else:
+      clear()
+      max_bidder = [key for key, value in bids.items() if value == max(bids.values())]
+      max_value = max(bids.values())
+      print(f"Congratulations {max_bidder}!! You have won with a max bid of: £{max_value}")
+      print(Win)
+  else:
+    deets(seller,item)
+
+def start():
+  print(logo2 +"\n")
+  seller = input("Hi, As the initial seller, please can you enter your name.. \n")
+  item = input(f"Hi {seller} what item would you like to sell? \n")
+  deets(seller,item)
+
+while in_progress:
+  try:
+    start()
+    try_again = input("Would you like to auction anything else? 'y/n'")
+    if try_again == "y":
+      start()
+    else:
+      if try_again != "y":
+        in_progress = False
+  except:
+      break
+
+# when you use a for loop on a dictionary, it loops through each of the keys, not each of the key/values.
+##----------------------------
+
+# How she did it:
+
+from replit import clear
+from art import logo
+print(logo)
+
+bids = {}
+bidding_finished = False
+
+def find_highest_bidder(bidding_record):
+  highest_bid = 0
+  winner = ""
+  # bidding_record = {"Angela": 123, "James": 321}
+  for bidder in bidding_record:
+    bid_amount = bidding_record[bidder]
+    if bid_amount > highest_bid: 
+      highest_bid = bid_amount
+      winner = bidder
+  print(f"The winner is {winner} with a bid of ${highest_bid}")
+
+while not bidding_finished:
+  name = input("What is your name?: ")
+  price = int(input("What is your bid?: $"))
+  bids[name] = price
+  should_continue = input("Are there any other bidders? Type 'yes or 'no'.\n")
+  if should_continue == "no":
+    bidding_finished = True
+    find_highest_bidder(bids)
+  elif should_continue == "yes":
+    clear()
+  
+
+"""
+FAQ: My console doesn't clear()
+
+This will happen if you’re using an IDE other than replit. 
+I’ll cover how to use PyCharm in Day 15. That said, you can write your own clear() function or configure your IDE like so: 
+
+https://www.udemy.com/course/100-days-of-code/learn/lecture/19279420#questions/16084076
+
+"""
+# Mine is a bit more in depth than hers by the looks of it.
+
+# the return function tells the computer to exit the program, so nothing after the return is actioned.
+
+##-------------------------------------------------------------
+##-------------------------------------------------------------
+
+# leap year month days:
+
+# my code:
+
+def is_leap(year):
+  if year % 4 == 0:
+    if year % 100 == 0:
+      if year % 400 == 0:
+        return True
+      else:
+        return False
+    else:
+      return True
+  else:
+    return False
+
+def days_in_month(year, month):
+  leap_year = is_leap(year)
+  month_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  if leap_year == True:
+    ly_month_days = [31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+    return ly_month_days[month-1]
+  else:
+    return month_days[month-1]
+  
+#🚨 Do NOT change any of the code below 
+year = int(input("Enter a year: "))
+month = int(input("Enter a month: "))
+days = days_in_month(year, month)
+print(days)
+
+##-------------------------------
+
+# How she did it:
+
+def is_leap(year):
+  if year % 4 == 0:
+    if year % 100 == 0:
+      if year % 400 == 0:
+        return True
+      else:
+        return False
+    else:
+      return True
+  else:
+    return False
+
+def days_in_month(year, month):
+  if month > 12 or month < 1:
+    return "invalid input"
+  leap_year = is_leap(year)
+  month_days = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+  if is_leap(year) and month == 2:
+    return 29
+  return month_days[month -1]
+    
+#🚨 Do NOT change any of the code below 
+year = int(input("Enter a year: "))
+month = int(input("Enter a month: "))
+days = days_in_month(year, month)
+print(days)
+
+
+
+##-------------------------------------------------------------
+##-------------------------------------------------------------
+
+
+# docstrings:
+
+#dockstrings are the explanations about what a function does when you tab.
+# so for len() it displays what len actually does.
+# we can create these in our functions by using 3x " on the line immediately after a def statement.. so for example:
+def my_function():
+   """this is a docstring and this is the location it should be in"""
+
+
+##-------------------------------------------------------------
+##-------------------------------------------------------------
+
+# calculator function issue 1.01 - check out the notes for working with dictionaries.
+
+# calculator
+def add(n1, n2):
+    return n1 + n2
+
+def subtract(n1, n2):
+    return n1 - n2
+
+def multiply(n1, n2):
+    return n1 * n2
+
+def divide(n1, n2):
+    return n1 / n2
+
+operations = {
+  "+":add, 
+  "-":subtract, 
+  "*":multiply, 
+  "/": divide
+  }
+
+num1 = int(input("What's the first number?: "))
+for key in operations:
+  print(key)
+operation_symbol = input("Pick an operation from the line above: ")
+num2 = int(input("What's the second number?: "))
+
+# so to call a string input as a function we have to do the following:
+calculation_function = operations[operation_symbol]
+# now we can use the operation_symbol string as a function call... ffs.
+first_answer = calculation_function(num1,num2)
+# it wasn't working because I put in the values, in the dictionary as strings.. instead of function calls... it's the dictionary that pairs together the input and the function call.
+print(f"{num1} {operation_symbol} {num2} = {first_answer}")
+
+# Look how the code is almost cyclical, using the same functions and parameters over and over same name, same function, same operation, just used over and over.
+operation_symbol = input("Pick another operation: ")
+num3 = int(input("What's the next number?: "))
+calculation_function = operations[operation_symbol]
+second_answer = calculation_function(first_answer, num3)
+
+print(f"{first_answer} {operation_symbol} {num3} = {second_answer}")
+
+##-------------------------------
+
+# This version shows a bug:
+
+#Calculator
+def add(n1, n2):
+  return n1 + n2
+
+def subtract(n1, n2):
+  return n1 - n2
+
+def multiply(n1, n2):
+  return n1 * n2
+
+def divide(n1, n2):
+  return n1 / n2
+
+operations = {
+  "+": add,
+  "-": subtract,
+  "*": multiply,
+  "/": divide
+}
+
+num1 = int(input("What's the first number?: "))
+for symbol in operations:
+  print(symbol)
+
+#Here we select "+"
+operation_symbol = input("Pick an operation: ") 
+num2 = int(input("What's the next number?: "))
+calculation_function = operations[operation_symbol]
+first_answer = calculation_function(num1, num2)
+
+print(f"{num1} {operation_symbol} {num2} = {first_answer}")
+
+#Here we select "*" which overides the "+" we selected on line 26.
+operation_symbol = input("Pick an operation: ") 
+num3 = int(input("What's the next number?: "))
+
+#Here the calculation_function selected will be the multiply() function
+calculation_function = operations[operation_symbol] 
+
+#Here the code will be:
+#second_answer = multiply(multiply(num1, num2), num3)
+second_answer = calculation_function(calculation_function(num1, num2), num3)
+#second_answer = 2 * 3 * 3 = 18
+#To fix this bug we need to change the code on line 42 to:
+second_answer = calculation_function(first_answer, num3)
+#In the next lesson, we will delete all the code from line 34-48 so don't worry
+#It won't affect your final project.
+#But it's a good oportunity to practice debugging. 🐞
+
+print(f"{first_answer} {operation_symbol} {num3} = {second_answer}")
+
+
+##-------------------------------
+# This is the finished version... check notes for how to cycle around.
+
+from replit import clear 
+from art import logo
+
+def add(n1, n2):
+  return n1 + n2
+
+def subtract(n1, n2):
+  return n1 - n2
+
+def multiply(n1, n2):
+  return n1 * n2
+
+def divide(n1, n2):
+  return n1 / n2
+
+operations = {
+  "+": add,
+  "-": subtract,
+  "*": multiply,
+  "/": divide
+}
+# she's also created a function so she can start a new calculation. - recursion.
+def calculator():
+  print(logo)
+
+  num1 = float(input("What's the first number?: "))
+  for symbol in operations:
+    print(symbol)
+  should_continue = True
+ 
+  while should_continue:
+    operation_symbol = input("Pick an operation: ")
+    num2 = float(input("What's the next number?: "))
+    calculation_function = operations[operation_symbol]
+    answer = calculation_function(num1, num2)
+    print(f"{num1} {operation_symbol} {num2} = {answer}")
+# look at the below in particular to see how she cycles around. num1 = answer if input == "y"
+    if input(f"Type 'y' to continue calculating with {answer}, or type 'n' to start a new calculation: ") == 'y':
+      num1 = answer
+    else:
+      should_continue = False
+      clear()
+      calculator()
+
+calculator()
+
+##-------------------------------------------------------------
+##-------------------------------------------------------------
+
+

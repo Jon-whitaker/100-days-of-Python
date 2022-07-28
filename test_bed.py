@@ -1,50 +1,119 @@
-from art import logo
+############### Blackjack Project #####################
 
-alphabet = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+#Difficulty Normal 😎: Use all Hints below to complete the project.
+#Difficulty Hard 🤔: Use only Hints 1, 2, 3 to complete the project.
+#Difficulty Extra Hard 😭: Only use Hints 1 & 2 to complete the project.
+#Difficulty Expert 🤯: Only use Hint 1 to complete the project.
+
+############### Our Blackjack House Rules #####################
+
+## The deck is unlimited in size. 
+## There are no jokers. 
+## The Jack/Queen/King all count as 10.
+## The the Ace can count as 11 or 1.
+## Use the following list as the deck of cards:
+## cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+## The cards in the list have equal probability of being drawn.
+## Cards are not removed from the deck as they are drawn.
+## The computer is the dealer.
+
+##################### Hints #####################
+
+import random
 
 
-proceed = True
+#Hint 1: Go to this website and try out the Blackjack game: 
+#   https://games.washingtonpost.com/games/blackjack/
+#Then try out the completed Blackjack project here: 
+#   http://blackjack-final.appbrewery.repl.run
 
-def caesar(start_text, shift_amount, cipher_direction):
-  end_text = ""
-  if shift_amount >= 26:
-    y = shift_amount % 26
-    shift_amount = y
-  if cipher_direction == "decode":
-    shift_amount *= -1
-  for char in start_text:
+#Hint 2: Read this breakdown of program requirements: 
+#   http://listmoz.com/view/6h34DJpvJBFVRlZfJvxF
+#Then try to create your own flowchart for the program.
 
-    #TODO-3: What happens if the user enters a number/symbol/space?
-    #Can you fix the code to keep the number/symbol/space when the text is encoded/decoded?
-    #e.g. start_text = "meet me at 3"
-    #end_text = "•••• •• •• 3"
-    if char.isalpha() == False:
-      end_text += char
-    else:
-      position = alphabet.index(char)
-      new_position = position + int(shift_amount)
-      end_text += alphabet[new_position]
-    
-  print(f"Here's the {cipher_direction}d result: {end_text}")
+#Hint 3: Download and read this flow chart I've created: 
+#   https://drive.google.com/uc?export=download&id=1rDkiHCrhaf9eX7u7yjM1qwSuyEk-rPnt
 
-#TODO-1: Import and print the logo from art.py when the program starts.
+player = input("What is your name?: ")
+print(f"Hi {player} Welcome to blackJack!")
 
-#TODO-4: Can you figure out a way to ask the user if they want to restart the cipher program?
-#e.g. Type 'yes' if you want to go again. Otherwise type 'no'.
-#If they type 'yes' then ask them for the direction/text/shift again and call the caesar() function again?
-#Hint: Try creating a while loop that continues to execute the program if the user types 'yes'. 
-while proceed == True:
-  print(logo)
-  direction = input("Type 'encode' to encrypt, type 'decode' to decrypt:\n")
-  text = input("Type your message:\n").lower()
-  shift = int(input("Type the shift number:\n"))
-# TODO-2: What if the user enters a shift that is greater than the number of letters in the alphabet?
-# Try running the program and entering a shift number of 45.
-# Add some code so that the program continues to work even if the user enters a shift number greater than 26. 
-# Hint: Think about how you can use the modulus (%).
+def deal_card(x):
+  cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+  x.append(random.choice(cards))
 
-  caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
-  try_again = input("would you like to restart the cypher program? type: 'yes' or 'no'")
-  print(try_again)
-  if try_again == "no":
-    proceed = False 
+#Hint 4: Create a deal_card() function that uses the List below to *return* a random card.
+#11 is the Ace.
+#cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+
+# Create a list per player:
+user_cards = []
+computer_cards = []
+tally = 2
+playing = True
+
+def dealer(i,tally):
+  while tally > len(i):
+    deal_card(i)
+
+
+#Hint 5: Deal the user and computer 2 cards each using deal_card() and append().
+
+def calculate_score(x):
+  tot = sum(x)
+  if len(x) == 2 and tot == 21:
+    return 0
+  for i in x:
+    if i == 11 and tot > 21:
+      x.remove(i)
+      x.append(1)
+      return tot
+  else:
+    return tot
+
+while playing:
+  dealer(user_cards,tally)
+  dealer(computer_cards,tally)
+  print(user_cards)
+  print(computer_cards)
+  if calculate_score(user_cards) == 0:
+    print(f"BlackJack!! Congratulations {player} you win!!")
+    playing = False
+  elif calculate_score(computer_cards) == 0:
+    print("Computer has hit BlackJack, sorry, you lose.")
+    playing = False
+  elif calculate_score(user_cards) > 21:
+    print(f"Sorry {player} you've bust! your score is: {calculate_score(user_cards)}")
+    playing = False
+  elif calculate_score(computer_cards) > 21:
+    print(f"You win {player} the computer bust!")
+    playing = False
+  else:
+    print(f"The computer score is: {calculate_score(computer_cards)}")
+    hit_me = input(f"your score is {calculate_score(user_cards)} do you want another card? y/n: ")
+    if hit_me == "y":
+      tally += 1
+    elif hit_me != "y":
+      winner = 0
+      if 
+
+
+
+#Hint 6: Create a function called calculate_score() that takes a List of cards as input 
+#and returns the score. 
+#Look up the sum() function to help you do this.
+
+#Hint 7: Inside calculate_score() check for a blackjack (a hand with only 2 cards: ace + 10) and return 0 instead of the actual score. 0 will represent a blackjack in our game.
+
+    #Hint 8: Inside calculate_score() check for an 11 (ace). If the score is already over 21, remove the 11 and replace it with a 1. You might need to look up append() and remove().
+
+      #Hint 9: Call calculate_score(). If the computer or the user has a blackjack (0) or if the user's score is over 21, then the game ends.
+
+#Hint 10: If the game has not ended, ask the user if they want to draw another card. If yes, then use the deal_card() function to add another card to the user_cards List. If no, then the game has ended.
+
+#Hint 11: The score will need to be rechecked with every new card drawn and the checks in Hint 9 need to be repeated until the game ends.
+
+#Hint 12: Once the user is done, it's time to let the computer play. The computer should keep drawing cards as long as it has a score less than 17.
+
+#Hint 13: Create a function called compare() and pass in the user_score and computer_score. If the computer and user both have the same score, then it's a draw. If the computer has a blackjack (0), then the user loses. If the user has a blackjack (0), then the user wins. If the user_score is over 21, then the user loses. If the computer_score is over 21, then the computer loses. If none of the above, then the player with the highest score wins.
+
+#Hint 14: Ask the user if they want to restart the game. If they answer yes, clear the console and start a new game of blackjack and show the logo from art.py.
